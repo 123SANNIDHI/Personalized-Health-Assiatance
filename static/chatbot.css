@@ -1,0 +1,156 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #a8edea, #fed6e3); /* Soft gradient background */
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center items horizontally */
+    min-height: 100vh;
+    padding-top: 30px; /* Add more top padding */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.main-heading {
+    color: #333; /* Dark gray heading color */
+    font-size: 2.8em; /* Slightly larger */
+    margin-bottom: 30px; /* More space below heading */
+    text-align: center; /* Ensure heading is centered */
+    width: 100%; /* Make sure it spans the width */
+}
+
+.back-button {
+        background-color: #6c757d; /* Bootstrap secondary color */
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-bottom: 20px; /* Space below the button */
+        transition: background-color 0.3s ease;
+        text-decoration: none; /* Prevent link styling if used with <a> */
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
+
+#chat-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+#chat-log {
+    padding: 25px;
+    overflow-y: auto;
+    flex-grow: 1;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #ddd #f5f5f5; /* For Firefox */
+}
+
+#chat-log::-webkit-scrollbar {
+    width: 8px; /* For Chrome, Safari, and Opera */
+}
+
+#chat-log::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+#chat-log::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 4px;
+}
+
+.user, .bot {
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    clear: both;
+    line-height: 1.5;
+}
+
+.user {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green */
+    float: right;
+    text-align: right;
+    border: 1px solid #c3e6cb;
+}
+
+.bot {
+    background-color: #e7f2fa; /* Light blue */
+    color: #1c54b2; /* Dark blue */
+    float: left;
+    text-align: left;
+    border: 1px solid #b8daff;
+}
+
+.sender {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #555; /* Slightly darker text for sender */
+}
+
+#input-area {
+    padding: 20px;
+    display: flex;
+    border-top: 1px solid #eee;
+    background-color: #f9f9f9;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-right: 15px;
+    font-size: 16px;
+    outline: none; /* Remove default focus outline */
+}
+
+#user-input:focus {
+    border-color: #007bff; /* Highlight on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#send-button {
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+#send-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.error {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #f5c6cb;
+}
+
+/* Style for formatted lists */
+#chat-log div[style*="margin-left"] {
+    margin-bottom: 5px;
+}
+
+#chat-log div[style*="margin-left"] span[style*="font-weight: bold"] {
+    color: #333; /* Darker color for list numbers/bullets */
+}

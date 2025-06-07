@@ -1,0 +1,56 @@
+{% extends 'home.html' %}
+
+{% block title %}Login - Personalized Health Assistant{% endblock %}
+
+{% block styles %}
+<style>
+    .login-box {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+    .alert {
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-box">
+    <h2 class="text-center mb-4">Login</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category != 'logout' %}
+                    <div class="alert alert-{{ category }} text-center" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            <label for="{{ form.username.id }}" class="form-label">Username</label>
+            {{ form.username(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.password.id }}" class="form-label">Password</label>
+            {{ form.password(class="form-control") }}
+        </div>
+        <div class="d-grid">
+            {{ form.submit(class="btn btn-primary w-100") }}
+        </div>
+    </form>
+    <p class="mt-3 text-center">
+        Don't have an account? <a href="{{ url_for('Register') }}">Register</a>
+    </p>
+    <p class="mt-2 text-center">
+        <a href="{{ url_for('reset_request') }}">Forgot your password?</a>
+    </p>
+</div>
+{% endblock %}

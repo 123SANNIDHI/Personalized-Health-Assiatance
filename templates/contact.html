@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Personalized Health Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 60px; /* Adjust for fixed navbar */
+        }
+        .contact-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #28a745; /* A healthy green */
+            margin-bottom: 30px;
+        }
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        .contact-info p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .contact-form button {
+            background-color: #007bff; /* A trustworthy blue */
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        .contact-form button:hover {
+            background-color: #0056b3;
+        }
+        .icon {
+            font-size: 24px;
+            color: #007bff;
+            margin-right: 10px;
+        }
+        .creative-note {
+            color: #777;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: rgba(97, 91, 91, 0.5);">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="/">
+                Health Assistant
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="/contact">Contact</a>
+                    </li>
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="contact-container">
+        <h1>Ready for Your Digital Check-Up?</h1>
+        <div class="contact-info">
+            <p>Have a question about your personalized health journey? Need assistance navigating your results? Think our AI could be even smarter? We're all ears!</p>
+            <p><i class="bi bi-envelope-fill icon"></i> Email us at: <a href="mailto:yksannidhi@gmail.com">yksannidhi@email.com</a></p>
+            <p><i class="bi bi-telephone-fill icon"></i> Give us a call at: +91 702291335 (Monday-Friday, 9 AM - 5 PM IST)</p>
+            <p><i class="bi bi-house-fill icon"></i>Sringeri:Chickmgaluru ditrsict,Karnataka</p>
+        </div>
+        <div class="contact-form">
+            <h2>Or Send Us a Direct Message:</h2>
+            <input type="text" placeholder="Your Name">
+            <!-- <input type="email" placeholder="Your Email"> -->
+            <textarea rows="5" id="contactMessage" placeholder="How can we help you today?"></textarea>
+            <button type="button" onclick="sendEmail()">Send Message</button>
+
+            <script>
+            function sendEmail() {
+                const message = document.getElementById('contactMessage').value;
+                const recipientEmail = 'yksannidhi@email.com'; // Replace with your actual email address
+                const subject = 'Contact Form Inquiry';
+                const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+                window.location.href = mailtoLink;
+            }
+            </script>
+        <p class="creative-note">Your well-being is our priority. Reach out, and let's ensure your health journey is smooth and insightful!</p>
+    </div>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

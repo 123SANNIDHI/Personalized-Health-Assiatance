@@ -1,0 +1,156 @@
+body {
+    background: linear-gradient(to right, #e0f7fa, #f0fff0); /* Light blue to light green */
+    min-height: 100vh; /* Ensure full viewport height */
+    display: flex; /* Enable flexbox for overall layout */
+}
+
+.sidebar {
+    height: 100vh; /* Full viewport height */
+    width: 250px; /* Adjust as needed */
+    background-color: #f8f9fa; /* Light gray background */
+    padding-top: 20px;
+    position: fixed; /* Fixed position to stay in view */
+    top: 0;
+    left: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Subtle shadow */
+    transition: margin-left 0.3s ease; /* Smooth transition for toggling */
+    z-index: 101; /* Ensure it's above the toggle button */
+}
+
+.sidebar.collapsed {
+    margin-left: -250px; /* Hide the sidebar */
+}
+
+.sidebar h3 {
+    padding: 10px 15px;
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #343a40; /* Dark gray text */
+    display: block;
+}
+
+.sidebar li a:hover {
+    background-color: #e9ecef; /* Slightly darker on hover */
+}
+
+.content {
+    flex-grow: 1; /* Allow main content to take remaining width */
+    padding: 20px;
+    margin-left: 250px; /* Initial margin to accommodate sidebar */
+    transition: margin-left 0.3s ease; /* Smooth transition for content */
+}
+
+.content.collapsed {
+    margin-left: 0; /* Content takes full width when sidebar is hidden */
+}
+
+h1 {
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.errors {
+    color: red;
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+canvas {
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+#sidebar-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100; /* Ensure it's above the sidebar */
+}
+
+/* Small screens */
+@media (max-width: 767.98px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed; /* Keep fixed on top for small screens */
+        top: 0;
+        left: -100%; /* Hide by default on small screens */
+        margin-left: 0;
+        margin-bottom: 10px;
+        z-index: 102; /* Higher z-index to be above content */
+    }
+
+    .sidebar.collapsed {
+        left: 0; /* Show sidebar when toggled on small screens */
+    }
+
+    .content {
+        margin-left: 0; /* No initial margin on small screens */
+        padding-top: 70px; /* Adjust padding to avoid overlap with fixed sidebar */
+    }
+
+    .content.collapsed {
+        margin-left: 0; /* No change needed on small screens */
+    }
+
+    #sidebar-toggle {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 103; /* Higher z-index */
+    }
+}

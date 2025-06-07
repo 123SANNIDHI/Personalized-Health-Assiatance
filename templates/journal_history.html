@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'sidebar.html' %}
+    <div class="content">
+        <h1>Journal History</h1>
+        {% if entries %}
+            <ul class="list-group">
+                {% for entry in entries %}
+                    <li class="list-group-item">
+                        <p class="mb-1"><strong>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</strong></p>
+                        <p class="mb-0">{{ entry.entry_text }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No journal entries yet.</p>
+        {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

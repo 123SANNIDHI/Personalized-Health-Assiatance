@@ -1,0 +1,106 @@
+{% extends 'home.html' %}
+
+{% block title %}About - Personalized Health Assistant{% endblock %}
+
+{% block styles %}
+<style>
+    /* Override the body background for this page */
+    body {
+        background-color: #000; /* Dark black background */
+        color: #f8f9fa; /* Light text for contrast */
+    }
+
+    .about-section {
+        padding: 30px;
+        background-color: rgba(34, 34, 34, 0.8); /* Slightly transparent dark background for the content box */
+        border-radius: 10px;
+        line-height: 1.6;
+        margin-top: 80px; /* Add top margin to create space below the navbar */
+    }
+
+    .intro, .mission, .vision, .important-note, .closing {
+        margin-bottom: 20px;
+    }
+
+    h2, h3 {
+        color: #00bfff; /* A bright color for headings on dark background */
+        margin-bottom: 10px;
+    }
+
+    .features-highlight ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .features-highlight li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .features-highlight i {
+        font-size: 1.2em;
+        margin-right: 10px;
+        color: #28a745; /* Keep a recognizable icon color */
+    }
+
+    .disclaimer {
+        color: #ffc107; /* A warning color for the disclaimer on dark background */
+        font-weight: bold;
+    }
+
+    /* Ensure navbar text remains visible */
+    .navbar a {
+        color: white !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-section">
+    <div class="intro">
+        <h2>Your Journey to Wellness Starts Here</h2>
+        <p>Imagine having a companion on your path to better health – a guide that offers insights and support at your fingertips. Personalized Health Assistant is more than just an application; it's your proactive partner in understanding your well-being.</p>
+    </div>
+
+    <div class="mission">
+        <h3>Our Guiding Star: Empowering Your Health Decisions</h3>
+        <p>We're driven by a simple yet powerful mission: to demystify health information and empower you to make informed choices. We believe that understanding your body is the first step towards a healthier and happier life.</p>
+    </div>
+
+    <div class="features-highlight">
+        <h3>What Makes Us Your Health Ally?</h3>
+        <ul>
+            <li>
+                <i class="bi bi-heart-pulse-fill"></i> <strong>Intelligent Symptom Insights:</strong> Get potential disease predictions based on your symptoms, offering a starting point for understanding your health.
+            </li>
+            <li>
+                <i class="bi bi-info-circle-fill"></i> <strong>Comprehensive Health Library:</strong> Explore detailed information on predicted conditions, including descriptions, potential treatments, and self-care advice.
+            </li>
+            <li>
+                <i class="bi bi-universal-access"></i> <strong>Designed for Everyone:</strong> With features like text-to-speech, we ensure our platform is accessible and user-friendly for all.
+            </li>
+            <li>
+                <i class="bi bi-chat-dots-fill"></i> <strong>Your Instant Support:</strong> Our integrated chatbot is ready to assist you with navigation and answer your initial queries.
+            </li>
+            <li>
+                <i class="bi bi-shield-lock-fill"></i> <strong>Your Privacy Matters:</strong> We provide a secure environment with protected registration and login to safeguard your personal information.
+            </li>
+        </ul>
+    </div>
+
+    <div class="vision">
+        <h3>Looking Ahead: A Healthier, More Informed You</h3>
+        <p>Our vision is to cultivate a community where individuals are actively engaged in their health journey. By providing personalized and accessible tools, we aspire to help you connect with your body's signals and embrace proactive wellness.</p>
+    </div>
+
+    <div class="important-note">
+        <h3>A Gentle Reminder: Your Health is Unique</h3>
+        <p class="disclaimer"><i class="bi bi-exclamation-triangle-fill"></i> The information provided here is for informational purposes only and should not replace professional medical advice. Always consult with a qualified healthcare provider for diagnosis and treatment.</p>
+    </div>
+
+    <div class="closing">
+        <p>Thank you for choosing Personalized Health Assistant as your partner in well-being. We are continuously evolving to better support your health journey.</p>
+    </div>
+</div>
+{% endblock %}

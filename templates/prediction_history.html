@@ -1,0 +1,47 @@
+{% extends 'sidebar.html' %} {# Or 'sidebar.html' if you want the sidebar layout #}
+
+{% block title %}Your Disease Prediction History{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Your Disease Prediction History</h1>
+        <p class="lead">Here you can review your past symptom inputs and disease predictions.</p>
+
+        {% if predictions %}
+            <div class="row">
+                {% for prediction in predictions %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                Prediction on {{ prediction.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Predicted Disease: <strong>{{ prediction.predicted_disease }}</strong></h5>
+                                <p class="card-text"><strong>Symptoms Entered:</strong> {{ prediction.input_symptoms }}</p>
+                                {% if prediction.disease_description %}
+                                    <p class="card-text"><strong>Description:</strong> {{ prediction.disease_description }}</p>
+                                {% endif %}
+                                {% if prediction.precautions %}
+                                    <p class="card-text"><strong>Precautions:</strong> {{ prediction.precautions }}</p>
+                                {% endif %}
+                                {% if prediction.medications %}
+                                    <p class="card-text"><strong>Medications:</strong> {{ prediction.medications }}</p>
+                                {% endif %}
+                                {% if prediction.diet %}
+                                    <p class="card-text"><strong>Diet Advice:</strong> {{ prediction.diet }}</p>
+                                {% endif %}
+                                {% if prediction.workout %}
+                                    <p class="card-text"><strong>Workout Advice:</strong> {{ prediction.workout }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                You haven't made any disease predictions yet. Go to <a href="{{ url_for('predict') }}">Disease Prediction</a> to start!
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

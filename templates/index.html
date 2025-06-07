@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Personalized Health Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    body {
+   background: linear-gradient(to right, #e0f7fa, #f0fff0);
+}
+     .navbar {
+    background-color: rgba(173, 216, 230, 0.5) !important; /* Light Blue with 50% transparency */
+}
+        .logo{
+            width: 50px;
+            height: 50px;
+            margin-top: 0;
+            margin-left: 2px;
+        }
+        .myimg{
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            border-radius: 25px;
+        }
+
+        .modal-content {
+            padding: 1rem;
+            border-radius: 1.5rem;
+        }
+        .modal-body p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .chat-bubble-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px; /* change from right: 20px to left: 20px */
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 18px;
+            background-color: #4285f4;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: sans-serif;
+            z-index: 999;
+        }
+
+        .chat-bubble-btn:hover {
+            background-color: #3367d6;
+            transform: scale(1.05);
+        }
+
+        .chat-icon {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .chat-text {
+            white-space: nowrap;
+        }
+       .Back-button {
+            color: #463d3d !important; /* White text for Go Back */
+            margin-right: auto !important; /* Push to the right */
+        }
+
+        .Back-button:hover {
+            color: #add8e6 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: rgba(173, 216, 230, 0.5);">
+    <div class="container-fluid">
+        <a class="navbar-brand text-dark" href="/">
+            Health Assistant
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{{ url_for('sidebar') }}" class="nav-link text-dark Back-button">Go Back</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    
+    <h1 class="text-center mt-2">Personalized Health Assistance</h1>
+
+    <div class="container mt-4" style="max-width: 500px;">
+        <form action="/predict" method="post" class="p-5 rounded shadow-sm" style="background-color: #e3f2fd;">
+            <div class="mb-4">
+                <label for="symptoms" class="form-label" style="font-size: 1.2rem; font-weight: 600;">Type Symptoms</label>
+                <input type="text" class="form-control form-control-lg" id="symptomInput" name="symptoms" placeholder="Enter the symptoms" required>
+                <div id="suggestion-box" class="autocomplete-items">
+                </div>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-info btn-lg text-white">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    {% if predicted_disease %}
+    <h1 class="text-center my-3 mt-3">Our AI System Results</h1>
+    <div class="container">
+        <div class="result-container d-flex flex-wrap justify-content-center gap-3">
+            <button class="btn btn-primary px-4 py-2 rounded-pill shadow" data-bs-toggle="modal" onClick="speakText('predicted disease: {{ predicted_disease | join() }}')" data-bs-target="#diseaseModal">Disease</button>
+            <button class="btn btn-success px-4 py-2 rounded-pill shadow" data-bs-toggle="modal" onClick="speakText('Description: {{ dis_des | join() }}')" data-bs-target="#descriptionModal">Description</button>
+            <button class="btn btn-danger px-4 py-2 rounded-pill shadow" data-bs-toggle="modal" onClick='speakText("Medication: {{ medications | join(', ') }}")' data-bs-target="#medicationModal">Medication</button>
+            <button class="btn btn-warning text-dark px-4 py-2 rounded-pill shadow" onClick='speakText("Precaution: {{ my_precautions | join(', ') }}")' data-bs-toggle="modal" data-bs-target="#precautionModal">Precaution</button>
+            <button class="btn btn-info text-white px-4 py-2 rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#workoutModal" data-speak="Workout: {{ workout | join(', ') | e }}" onclick="speakText(this.dataset.speak)">Workout</button>
+
+            <button class="btn btn-dark px-4 py-2 rounded-pill shadow" data-bs-toggle="modal" onClick='speakText("diet: {{ my_diet | join(', ') }}")' data-bs-target="#dietModal">Diet</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-primary text-white rounded-top-4">
+                    <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"  onclick="stopSpeech()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-5">
+                    <p>{{ predicted_disease }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-success text-white rounded-top-4">
+                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"  onclick="stopSpeech()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-5">
+                    <p>{{ dis_des }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="medicationModal" tabindex="-1" aria-labelledby="medicationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-danger text-white rounded-top-4">
+                    <h5 class="modal-title" id="medicationModalLabel">Medication</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"  onclick="stopSpeech()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-5">
+                    <ul>
+                        {% for i in medications %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-warning text-dark rounded-top-4">
+                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"  onclick="stopSpeech()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-5">
+                    <ul>
+                        {% for i in my_precautions %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="workoutModal" tabindex="-1" aria-labelledby="workoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-info text-white rounded-top-4">
+                    <h5 class="modal-title" id="workoutModalLabel">Workout</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"  onclick="stopSpeech()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-5">
+                    <ul>
+                        {% for i in workout %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dietModal" tabindex="-1" aria-labelledby="dietModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-dark text-white rounded-top-4">
+                    <h5 class="modal-title" id="dietModalLabel">Diet</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"  onclick="stopSpeech()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fs-5">
+                    <ul>
+                        {% for i in my_diet %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const symptoms = [ 'itching', 'skin rash', 'nodal skin eruptions', 'continuous sneezing', 'shivering', 'chills',
+            'joint pain', 'stomach pain', 'acidity', 'ulcers on tongue', 'muscle wasting', 'vomiting',
+            'burning micturition', 'spotting urination', 'fatigue', 'weight gain', 'anxiety',
+            'cold hands and feets', 'mood swings', 'weight loss', 'restlessness', 'lethargy',
+            'patches in throat', 'irregular sugar level', 'cough', 'high fever', 'sunken eyes',
+            'breathlessness', 'sweating', 'dehydration', 'indigestion', 'headache', 'yellowish skin',
+            'dark urine', 'nausea', 'loss of appetite', 'pain behind the eyes', 'back pain',
+            'constipation', 'abdominal pain', 'diarrhoea', 'mild fever', 'yellow urine',
+            'yellowing of eyes', 'acute liver failure', 'fluid overload', 'swelling of stomach',
+            'swelled lymph nodes', 'malaise', 'blurred and distorted vision', 'phlegm',
+            'throat irritation', 'redness of eyes', 'sinus pressure', 'runny nose', 'congestion',
+            'chest pain', 'weakness in limbs', 'fast heart rate', 'pain during bowel movements',
+            'pain in anal region', 'bloody stool', 'irritation in anus', 'neck pain', 'dizziness',
+            'cramps', 'bruising', 'obesity', 'swollen legs', 'swollen blood vessels',
+            'puffy face and eyes', 'enlarged thyroid', 'brittle nails', 'swollen extremeties',
+            'excessive hunger', 'extra marital contacts', 'drying and tingling lips', 'slurred speech',
+            'knee pain', 'hip joint pain', 'muscle weakness', 'stiff neck', 'swelling joints',
+            'movement stiffness', 'spinning movements', 'loss of balance', 'unsteadiness',
+            'weakness of one body side', 'loss of smell', 'bladder discomfort', 'foul smell of urine',
+            'continuous feel of urine', 'passage of gases', 'internal itching', 'toxic look (typhos)',
+            'depression', 'irritability', 'muscle pain', 'altered sensorium', 'red spots over body',
+            'belly pain', 'abnormal menstruation', 'dischromic patches', 'watering from eyes',
+            'increased appetite', 'polyuria', 'family history', 'mucoid sputum', 'rusty sputum',
+            'lack of concentration', 'visual disturbances', 'receiving blood transfusion',
+            'receiving unsterile injections', 'coma', 'stomach bleeding', 'distention of abdomen',
+            'history of alcohol consumption', 'fluid overload 1', 'blood in sputum',
+            'prominent veins on calf', 'palpitations', 'painful walking', 'pus filled pimples',
+            'blackheads', 'scurring', 'skin peeling', 'silver like dusting',
+            'small dents in nails', 'inflammatory nails', 'blister','red sore around nose',
+            'yellow crust ooze'
+        ];
+
+ const input = document.getElementById('symptomInput');
+        const suggestionBox = document.getElementById('suggestion-box');
+        const form = document.querySelector('form');
+        const submitButton = form.querySelector('button[type="submit"]'); // Get the submit button
+
+        form.addEventListener('submit', function(event) {
+            const symptomsInput = document.getElementById('symptomInput').value.trim();
+            const symptomList = symptomsInput.split(',').map(s => s.trim()).filter(s => s !== '');
+            const validSymptoms = symptomList.filter(symptom => symptoms.includes(symptom));
+
+            if (symptomList.length < 4) {
+                event.preventDefault(); // Prevent form submission
+                displayError('Please enter at least 4 symptoms for a more accurate prediction.');
+            } else if (validSymptoms.length < 4) {
+                event.preventDefault(); // Prevent form submission
+                displayError('Please enter at least 4 valid symptoms from the suggestions.');
+            }
+        });
+
+        input.addEventListener('input', () => {
+            const inputValue = input.value;
+            const parts = inputValue.split(','); // split by comma
+            const currentPart = parts[parts.length - 1].trim().toLowerCase(); // current word
+
+            suggestionBox.innerHTML = ''; // Clear previous suggestions
+
+            if (currentPart) {
+                const matches = symptoms.filter(symptom =>
+                    symptom.toLowerCase().includes(currentPart)
+                );
+
+                matches.forEach(symptom => {
+                    const item = document.createElement('div');
+                    item.textContent = symptom;
+                    item.addEventListener('click', () => {
+                        parts[parts.length - 1] = ` ${symptom}`; // replace current word
+                        input.value = parts.join(',').replace(/^,/, ''); // update input
+                        suggestionBox.innerHTML = ''; // Clear suggestions after selection
+                    });
+                    suggestionBox.appendChild(item);
+                });
+
+                if (matches.length === 0) {
+                    suggestionBox.innerHTML = '<div>No match found</div>';
+                }
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target !== input) {
+                suggestionBox.innerHTML = ''; // Hide suggestions when clicking outside
+            }
+        });
+
+        function displayError(message) {
+            const errorDiv = document.querySelector('.alert-danger');
+            if (errorDiv) {
+                errorDiv.textContent = message;
+            } else {
+                const newErrorDiv = document.createElement('div');
+                newErrorDiv.className = 'alert alert-danger';
+                newErrorDiv.textContent = message;
+                const formElement = document.querySelector('form > div');
+                formElement.insertBefore(newErrorDiv, formElement.firstChild);
+
+                // Remove the error message after a few seconds
+                setTimeout(() => {
+                    newErrorDiv.remove();
+                }, 5000);
+            }
+        }
+
+        function speakText(text) {
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            synth.speak(utterance);
+        }
+
+        function stopSpeech() {
+            console.log("Speech stopped.");
+            window.speechSynthesis.cancel();
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
